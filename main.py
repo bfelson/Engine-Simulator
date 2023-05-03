@@ -6,6 +6,7 @@ from Turbocharger import *
 from Reactor import *
 from Engine import *
 from GUI import *
+from scipy.integrate import trapz
 
 def plot_ca_pressure():
     fig, ax = plt.subplots()
@@ -53,6 +54,18 @@ def plot_gas_composition():
     ax.set_xlabel(r'$\phi$ (deg)')
     ax.set_ylabel('Mass Fraction $X_i$ (%)')
     plt.show()
+
+def plot_CO():
+    MW = sim.states.mean_molecular_weight
+    CO_emission = trapz(MW * sim.states.mdot_out * sim.states('CO').X[:, 0], t)
+    CO_emission /= trapz(MW * sim.states.mdot_out, t)
+    print('CO emission (estimate):', CO_emission * 1.e6, 'ppm')
+
+def plot_CO2():
+    MW = sim.states.mean_molecular_weight
+    CO2_emission = trapz(MW * sim.states.mdot_out * sim.states('CO2').X[:, 0], t)
+    CO2_emission /= trapz(MW * sim.states.mdot_out, t)
+    print('CO2 emission (estimate):', CO2_emission * 1.e6, 'ppm')
 
 
 sim = simulator
