@@ -6,5 +6,3 @@ class Fuel():
         self.phase_name = phase_name
         self.composition_air = composition_air 
         self.composition_fuel = composition_fuel
-
-fuel = Fuel('nDodecane_Reitz.yaml', 'nDodecane_IG', 'o2:1, n2:3.76', 'c12h26:1')

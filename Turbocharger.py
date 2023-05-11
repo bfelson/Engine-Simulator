@@ -8,4 +8,3 @@ class Turbocharger():
         self.outlet_pressure = outlet_pressure
         self.inlet_composition = inlet_composition
 
-turbocharger = Turbocharger(600, 1.3e5, 1.2e5, fuel.composition_air)
