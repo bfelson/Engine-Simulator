@@ -7,7 +7,7 @@ from Reactor import *
 from Engine import *
 from GUI import *
 from scipy.integrate import trapz
-
+'''
 def plot_ca_pressure():
     fig, ax = plt.subplots()
     ax.plot(t, sim.states.P)
@@ -82,11 +82,4 @@ def plot_CO2():
     CO2_emission = trapz(MW * sim.states.mdot_out * sim.states('CO2').X[:, 0], t)
     CO2_emission /= trapz(MW * sim.states.mdot_out, t)
     print('CO2 emission (estimate):', CO2_emission * 1.e6, 'ppm')
-
-
-simulator = Simulator(8, 20, 1e-12, 1e-16, cylinder, 1, inlet_valve, outlet_valve, ambient_reservoir)
-cylinder.set_advance_limit('temperature', simulator.max_delta_t)
-
-sim = simulator
-sim.simulate()
-t = sim.states.t
+'''
