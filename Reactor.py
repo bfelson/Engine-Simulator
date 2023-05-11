@@ -9,10 +9,14 @@ from Injector import *
 from scipy.integrate import trapz
 
 fuel = Fuel('nDodecane_Reitz.yaml', 'nDodecane_IG', 'o2:1, n2:3.76', 'c12h26:1')
+injector = Injector(600, 1600e5, fuel.composition_fuel, 350, 365, 3.2e-5)
 turbocharger = Turbocharger(600, 1.3e5, 1.2e5, fuel.composition_air)
 
 class Reactor():
     def __init__(self, fuel, turbocharger):
+        self.fuel = fuel
+        self.turbocharger = turbocharger
+
         self.runSimulation = False
         #store thermodynamic state of fuel
         self.gas = ct.Solution(fuel.rxn_mechanism, fuel.phase_name)
@@ -20,39 +24,39 @@ class Reactor():
         #Initial state for Inlet
         self.gas.TPX = turbocharger.inlet_temp, turbocharger.inlet_pressure, turbocharger.inlet_composition
         #make reactor
-        cylinder = ct.IdealGasReactor(self.gas)
-        cylinder.volume = engine.volume_combustion_dome
+        self.cylinder = ct.IdealGasReactor(self.gas)
+        self.cylinder.volume = engine.volume_combustion_dome
 
         self.gas.TPX = turbocharger.inlet_temp, turbocharger.inlet_pressure, turbocharger.inlet_composition
-        inlet_reservoir = ct.Reservoir(self.gas)
+        self.inlet_reservoir = ct.Reservoir(self.gas)
         #Create outlet valve
-        inlet_valve = ct.Valve(inlet_reservoir, cylinder)
-        inlet_valve.valve_coeff = inlet.valve_coefficient
-        inlet_valve.set_time_function(inlet.isOpen)
+        self.inlet_valve = ct.Valve(self.inlet_reservoir, self.cylinder)
+        self.inlet_valve.valve_coeff = inlet.valve_coefficient
+        self.inlet_valve.set_time_function(inlet.isOpen)
 
         #Injector Stuff
         self.gas.TPX = injector.temperature, injector.pressure, injector.composition
-        injector_reservoir = ct.Reservoir(self.gas)
+        self.injector_reservoir = ct.Reservoir(self.gas)
 
-        injector_mfc = ct.MassFlowController(injector_reservoir, cylinder)
-        injector_mfc.mass_flow_coeff = injector.mass_flow_coefficient
-        injector_mfc.set_time_function(injector.isOpen)
+        self.injector_mfc = ct.MassFlowController(self.injector_reservoir, self.cylinder)
+        self.injector_mfc.mass_flow_coeff = injector.mass_flow_coefficient
+        self.injector_mfc.set_time_function(injector.isOpen)
 
         #Next state for outlet
         self.gas.TPX = ambient.temperature, turbocharger.outlet_pressure, ambient.composition
-        outlet_reservoir = ct.Reservoir(self.gas)
+        self.outlet_reservoir = ct.Reservoir(self.gas)
 
         #Create Outlet Valve
-        outlet_valve = ct.Valve(cylinder, outlet_reservoir)
-        outlet_valve.valve_coeff = outlet.valve_coefficient
-        outlet_valve.set_time_function(outlet.isOpen)
+        self.outlet_valve = ct.Valve(self.cylinder, self.outlet_reservoir)
+        self.outlet_valve.valve_coeff = outlet.valve_coefficient
+        self.outlet_valve.set_time_function(outlet.isOpen)
 
         #Ambient Stuff
         self.gas.TPX = ambient.temperature, ambient.pressure, ambient.composition
-        ambient_reservoir = ct.Reservoir(self.gas)
+        self.ambient_reservoir = ct.Reservoir(self.gas)
 
         #Setting Piston as moving wall
-        piston = ct.Wall(ambient_reservoir, cylinder)
+        piston = ct.Wall(self.ambient_reservoir, self.cylinder)
         piston.area = engine.area
         piston.set_velocity(engine.get_piston_speed)
 
@@ -82,7 +86,7 @@ class Reactor():
         self.o2_comp = self.s('o2').X
         self.co2_comp = self.s('co2').X
         self.co_comp = self.s('co').X
-        self.fuel_comp = self.s(self.fuel.composition_fuel)
+        self.fuel_comp = self.s(self.fuel.composition_fuel[:-2])
         #Heat Release Rate per Cylinder
         self.Q = trapz(self.s.heat_release_rate * self.V, self.t) / self.t[-1] * 1000 #kW
         #Expansion Power
@@ -90,7 +94,7 @@ class Reactor():
         #Efficiency
         self.eta = (self.W / self.Q) * 100 #%
         #Molecular Weight
-        self.MW = self.t.mean_molecular_weight
+        self.MW = self.s.mean_molecular_weight
         #Emissions (ppm)
         self.CO_emissions = trapz(self.MW * self.s.mdot_out * self.s('CO').X[:, 0], self.t) / trapz(self.MW * self.s.mdot_out, self.t) * 1e6
         self.CO2_emissions = trapz(self.MW * self.s.mdot_out * self.s('CO2').X[:, 0], self.t) / trapz(self.MW * self.s.mdot_out, self.t) * 1e6

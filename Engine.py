@@ -20,5 +20,5 @@ class Engine():
     
     def get_piston_speed(self, t):
         return - self.stroke * np.pi * self.engine_speed * np.sin(self.get_crank_angle(t))
-
+    
 engine = Engine(0.083, 0.006, 50, 4)

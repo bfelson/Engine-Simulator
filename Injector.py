@@ -19,5 +19,3 @@ class Injector():
     def isOpen(self, t):
         #Returns true if xLet is open at a given time t
         return np.mod(engine.get_crank_angle(t) - self.open_timing, 4 * np.pi) < self.delta
-
-injector = Injector(600, 1600e5, fuel.composition_fuel, 350, 365, 3.2e-5)

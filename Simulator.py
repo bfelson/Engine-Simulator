@@ -2,7 +2,6 @@ import cantera as ct
 
 from Engine import *
 from Ambient import *
-from Reactor import *
 
 class Simulator():
     def __init__(self, number_revolutions, max_delta_t, rtol, atol, cylinder, 
