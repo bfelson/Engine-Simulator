@@ -41,6 +41,12 @@ class App(tk.Tk):
         self.pv_diagram_button = tk.Button(self, text="Print CO2 Emissions", command = plot_CO2)
         self.pv_diagram_button.pack()
 
+        self.mb("Efficiency", efficiency)
+
+    def mb(self, text, command):
+        self.button = tk.Button(text=text, command=command)
+        self.button.pack()
+
 app = App()
 app.title("Sample GUI")
 app.mainloop()

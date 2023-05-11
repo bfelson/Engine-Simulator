@@ -48,6 +48,3 @@ ambient_reservoir = ct.Reservoir(gas)
 piston = ct.Wall(ambient_reservoir, cylinder)
 piston.area = engine.area
 piston.set_velocity(engine.get_piston_speed)
-
-simulator = Simulator(8, 20, 1e-12, 1e-16, cylinder, 1, inlet_valve, outlet_valve, ambient_reservoir)
-cylinder.set_advance_limit('temperature', simulator.max_delta_t)

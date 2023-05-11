@@ -55,6 +55,22 @@ def plot_gas_composition():
     ax.set_ylabel('Mass Fraction $X_i$ (%)')
     plt.show()
 
+def heat_release():
+    Q = trapz(sim.states.heat_release_rate * sim.states.V, t)
+    output_format = '{:45s}{:>4.1f} {}'
+    print(output_format.format('Heat Release per Cylinder (est.): ', Q / t[-1] / 1000., 'kW'))
+
+def expansion_power():
+    W = trapz(sim.states.dWv_dt, t)
+    output_format = '{:45s}{:>4.1f} {}'
+    print(output_format.format('Expansion power per cylinder (est.)', W / t[-1] / 1000., 'kW'))
+
+def efficiency():
+    W = trapz(sim.states.dWv_dt, t)
+    Q = trapz(sim.states.heat_release_rate * sim.states.V, t)
+    output_format = '{:45s}{:>4.1f} {}'
+    print(output_format.format('Efficiency (est.): ', W/Q * 100, '%'))
+
 def plot_CO():
     MW = sim.states.mean_molecular_weight
     CO_emission = trapz(MW * sim.states.mdot_out * sim.states('CO').X[:, 0], t)
@@ -67,6 +83,9 @@ def plot_CO2():
     CO2_emission /= trapz(MW * sim.states.mdot_out, t)
     print('CO2 emission (estimate):', CO2_emission * 1.e6, 'ppm')
 
+
+simulator = Simulator(8, 20, 1e-12, 1e-16, cylinder, 1, inlet_valve, outlet_valve, ambient_reservoir)
+cylinder.set_advance_limit('temperature', simulator.max_delta_t)
 
 sim = simulator
 sim.simulate()
