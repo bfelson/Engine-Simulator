@@ -8,6 +8,8 @@ from Simulator import *
 from Injector import *
 from scipy.integrate import trapz
 
+
+
 fuel = Fuel('nDodecane_Reitz.yaml', 'nDodecane_IG', 'o2:1, n2:3.76', 'c12h26:1')
 injector = Injector(600, 1600e5, fuel.composition_fuel, 350, 365, 3.2e-5)
 turbocharger = Turbocharger(600, 1.3e5, 1.2e5, fuel.composition_air)
