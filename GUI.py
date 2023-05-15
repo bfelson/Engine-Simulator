@@ -1,52 +1,77 @@
-import tkinter as tk
-from main import *
 
-class App(tk.Tk):
-    def __init__(self):
-        super().__init__()
+'''
+def plot_ca_pressure():
+    fig, ax = plt.subplots()
+    ax.plot(t, sim.states.P)
+    ax.set_xlabel(r'$\phi$ (deg)')
+    ax.set_ylabel("Pressure (Pa)")
+    plt.show()
 
-        # Create a frame for the main content of the window
-        self.main_frame = tk.Frame(self)
-        self.main_frame.pack(fill="both", expand=True)
+def plot_ca_temp():
+    fig, ax = plt.subplots()
+    ax.plot(t, sim.states.T)
+    ax.set_xlabel(r'$\phi$ (deg)')
+    ax.set_ylabel('$T$ (K)')
+    plt.show()
 
-        #Crank Angle, P
-        self.ca_pressure_button = tk.Button(self, text="Plot CA Pressure", command=plot_ca_pressure)
-        self.ca_pressure_button.pack()
+def plot_pv_diagram():
+    fig, ax = plt.subplots()
+    ax.plot(sim.states.V[t > 0.04] * 1000,  sim.states.P[t > 0.04])
+    ax.set_xlabel('$V$ (L)')
+    ax.set_ylabel('$P$ (Pa)')
+    plt.show()
 
-        #Crank Angle, Temp
-        self.ca_temperature_button = tk.Button(self, text="Plot CA Temperature", command = plot_ca_temp)
-        self.ca_temperature_button.pack()
+def plot_ts_diagram():
+    fig, ax = plt.subplots()
+    ax.plot(sim.states.m[t > 0.04] * sim.states.s[t > 0.04], sim.states.T[t > 0.04])
+    ax.set_xlabel("$S$ (J/K)")
+    ax.set_ylabel("$T$ (K)")
+    plt.show()
 
-        #PV Diagram
-        self.pv_diagram_button = tk.Button(self, text="Plot PV Diagram", command = plot_pv_diagram)
-        self.pv_diagram_button.pack()
+def plot_QW():
+    fig, ax = plt.subplots()
+    ax.plot(t, 1e-3 * sim.states.heat_release_rate * sim.states.V, label=r'$\dot{Q}$')
+    ax.plot(t, 1e-3 * sim.states.dWv_dt, label=r'\dot{W}_v')
+    ax.set_xlabel(r'$\phi$ (deg)')
+    ax.set_ylabel("kW")
+    plt.show()
 
-        #TS Diagram
-        self.pv_diagram_button = tk.Button(self, text="Plot TS Diagram", command = plot_ts_diagram)
-        self.pv_diagram_button.pack()
+def plot_gas_composition():
+    fig, ax = plt.subplots()
+    ax.plot(t, sim.states('o2').X, label='O2')
+    ax.plot(t, sim.states('co2').X, label='CO2')
+    ax.plot(t, sim.states('co').X, label='CO')
+    ax.plot(t, sim.states('c12h26').X, label='n-Dodecane x10')
 
-        #Heat of Reaction
-        self.pv_diagram_button = tk.Button(self, text="Plot Reaction Heat, Expansion Work", command = plot_QW)
-        self.pv_diagram_button.pack()
+    ax.set_xlabel(r'$\phi$ (deg)')
+    ax.set_ylabel('Mass Fraction $X_i$ (%)')
+    plt.show()
 
-        #Gas Composition
-        self.pv_diagram_button = tk.Button(self, text="Plot Gas Composition", command = plot_gas_composition)
-        self.pv_diagram_button.pack()
+def heat_release():
+    Q = trapz(sim.states.heat_release_rate * sim.states.V, t)
+    output_format = '{:45s}{:>4.1f} {}'
+    print(output_format.format('Heat Release per Cylinder (est.): ', Q / t[-1] / 1000., 'kW'))
 
-        #CO Emissions
-        self.pv_diagram_button = tk.Button(self, text="Print CO Emissions", command = plot_CO)
-        self.pv_diagram_button.pack()
+def expansion_power():
+    W = trapz(sim.states.dWv_dt, t)
+    output_format = '{:45s}{:>4.1f} {}'
+    print(output_format.format('Expansion power per cylinder (est.)', W / t[-1] / 1000., 'kW'))
 
-        #CO2 Emissions
-        self.pv_diagram_button = tk.Button(self, text="Print CO2 Emissions", command = plot_CO2)
-        self.pv_diagram_button.pack()
+def efficiency():
+    W = trapz(sim.states.dWv_dt, t)
+    Q = trapz(sim.states.heat_release_rate * sim.states.V, t)
+    output_format = '{:45s}{:>4.1f} {}'
+    print(output_format.format('Efficiency (est.): ', W/Q * 100, '%'))
 
-        self.mb("Efficiency", efficiency)
+def plot_CO():
+    MW = sim.states.mean_molecular_weight
+    CO_emission = trapz(MW * sim.states.mdot_out * sim.states('CO').X[:, 0], t)
+    CO_emission /= trapz(MW * sim.states.mdot_out, t)
+    print('CO emission (estimate):', CO_emission * 1.e6, 'ppm')
 
-    def mb(self, text, command):
-        self.button = tk.Button(text=text, command=command)
-        self.button.pack()
-
-app = App()
-app.title("Sample GUI")
-app.mainloop()
+def plot_CO2():
+    MW = sim.states.mean_molecular_weight
+    CO2_emission = trapz(MW * sim.states.mdot_out * sim.states('CO2').X[:, 0], t)
+    CO2_emission /= trapz(MW * sim.states.mdot_out, t)
+    print('CO2 emission (estimate):', CO2_emission * 1.e6, 'ppm')
+'''
