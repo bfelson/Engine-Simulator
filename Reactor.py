@@ -13,10 +13,11 @@ from scipy.integrate import trapz
 # turbocharger = Turbocharger(600, 1.3e5, 1.2e5, fuel.composition_air)
 
 class Reactor():
-    def __init__(self, fuel, turbocharger, engine):
+    def __init__(self, fuel, turbocharger, engine, injector):
         self.engine = engine
         self.fuel = fuel
         self.turbocharger = turbocharger
+        self.injector = injector
 
         self.runSimulation = False
         #store thermodynamic state of fuel
@@ -36,12 +37,12 @@ class Reactor():
         self.inlet_valve.set_time_function(inlet.isOpen)
 
         #Injector Stuff
-        self.gas.TPX = injector.temperature, injector.pressure, injector.composition
+        self.gas.TPX = self.injector.temperature, self.injector.pressure, self.injector.composition
         self.injector_reservoir = ct.Reservoir(self.gas)
 
         self.injector_mfc = ct.MassFlowController(self.injector_reservoir, self.cylinder)
-        self.injector_mfc.mass_flow_coeff = injector.mass_flow_coefficient
-        self.injector_mfc.set_time_function(injector.isOpen)
+        self.injector_mfc.mass_flow_coeff = self.injector.mass_flow_coefficient
+        self.injector_mfc.set_time_function(self.injector.isOpen)
 
         #Next state for outlet
         self.gas.TPX = ambient.temperature, turbocharger.outlet_pressure, ambient.composition
@@ -102,6 +103,6 @@ class Reactor():
 
         self.runSimulation = True
 
-r = Reactor(fuel, turbocharger)
-r.create_sim()
-r.run_sim()
+# r = Reactor(fuel, turbocharger)
+# r.create_sim()
+# r.run_sim()

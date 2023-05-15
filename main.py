@@ -11,6 +11,7 @@ from Engine import Engine
 from Fuel import Fuel
 from Injector import Injector
 from Turbocharger import Turbocharger
+from Reactor import Reactor
 
 class Window(QMainWindow):
     def __init__(self, parent=None):
@@ -29,8 +30,26 @@ class Window(QMainWindow):
 
     def make_components(self):
         self.make_engine()
+        self.make_fuel()
         self.make_injector()
-        self.make_turbocharger
+        self.make_turbocharger()
+
+        self.make_reactor()
+        self.reactor.create_sim()
+
+
+    def make_reactor(self):
+        self.reactor = Reactor(
+            self.fuel, self.turbocharger, self.engine, self.injector
+        )
+
+    def make_fuel(self):
+        self.fuel = Fuel(
+            ui.filebrowsefilename.text(),
+            ui.rxnmechedit.text(),
+            ui.aircompedit.text(),
+            ui.fuelcompedit.text()
+        )
         
     def make_engine(self):
         self.engine = Engine(
@@ -59,7 +78,7 @@ class Window(QMainWindow):
         )
 
     def startSimulation(self):
-        pass
+        self.reactor.run_sim()
 
     def plotValues(self):
         pass
