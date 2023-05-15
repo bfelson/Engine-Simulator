@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>E</string>
+   <string>Engine Simulator</string>
   </property>
   <property name="documentMode">
    <bool>false</bool>
@@ -508,7 +508,7 @@
                <property name="frameShadow">
                 <enum>QFrame::Raised</enum>
                </property>
-               <layout class="QHBoxLayout" name="horizontalLayout_6">
+               <layout class="QVBoxLayout" name="verticalLayout_33">
                 <property name="spacing">
                  <number>25</number>
                 </property>
@@ -536,21 +536,43 @@
                    </font>
                   </property>
                   <property name="text">
-                   <string>Fuel File:</string>
+                   <string>Fuel Type:</string>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QToolButton" name="filebrowsebutton">
-                  <property name="font">
-                   <font>
-                    <family>Cambria</family>
-                    <pointsize>10</pointsize>
-                   </font>
+                 <widget class="QFrame" name="frame">
+                  <property name="frameShape">
+                   <enum>QFrame::StyledPanel</enum>
                   </property>
-                  <property name="text">
-                   <string>Browse for File</string>
+                  <property name="frameShadow">
+                   <enum>QFrame::Raised</enum>
                   </property>
+                  <layout class="QVBoxLayout" name="verticalLayout_34">
+                   <item>
+                    <widget class="QToolButton" name="filebrowsebutton">
+                     <property name="font">
+                      <font>
+                       <family>Cambria</family>
+                       <pointsize>10</pointsize>
+                      </font>
+                     </property>
+                     <property name="text">
+                      <string>Browse for File</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLineEdit" name="filebrowsefilename">
+                     <property name="font">
+                      <font>
+                       <family>Cambria</family>
+                       <pointsize>10</pointsize>
+                      </font>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
                  </widget>
                 </item>
                </layout>
@@ -1483,5 +1505,110 @@
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>checkvalues</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>submitValues()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>162</x>
+     <y>855</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-16</x>
+     <y>673</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>runsim</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>startSimulation()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>436</x>
+     <y>844</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>3</x>
+     <y>856</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>plotsomething</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>plotValues()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>622</x>
+     <y>855</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>2</x>
+     <y>913</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>generatedPlots</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>pregeneratedPlots()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>913</x>
+     <y>855</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>5</x>
+     <y>892</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>createstudy</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>newStudy()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1089</x>
+     <y>856</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1252</x>
+     <y>916</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>filebrowsebutton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>selectFile()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>158</x>
+     <y>343</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>3</x>
+     <y>375</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>submitValues()</slot>
+  <slot>startSimulation()</slot>
+  <slot>plotValues()</slot>
+  <slot>pregeneratedPlots()</slot>
+  <slot>newStudy()</slot>
+  <slot>selectFile()</slot>
+ </slots>
 </ui>

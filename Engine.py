@@ -11,8 +11,6 @@ class Engine():
         self.volume_cylinder = self.area * self.stroke
         self.volume_combustion_dome = self.volume_cylinder / (self.compression_ratio - 1)
 
-
-
         self.engine_speed = 3000 / 60 #rpm
 
     def get_crank_angle(self, t):
@@ -21,4 +19,4 @@ class Engine():
     def get_piston_speed(self, t):
         return - self.stroke * np.pi * self.engine_speed * np.sin(self.get_crank_angle(t))
     
-engine = Engine(0.083, 0.006, 50, 4)
+# engine = Engine(0.083, 0.006, 50, 4)
