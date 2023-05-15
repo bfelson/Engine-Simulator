@@ -8,14 +8,13 @@ from Simulator import *
 from Injector import *
 from scipy.integrate import trapz
 
-
-
-fuel = Fuel('nDodecane_Reitz.yaml', 'nDodecane_IG', 'o2:1, n2:3.76', 'c12h26:1')
-injector = Injector(600, 1600e5, fuel.composition_fuel, 350, 365, 3.2e-5)
-turbocharger = Turbocharger(600, 1.3e5, 1.2e5, fuel.composition_air)
+# fuel = Fuel('nDodecane_Reitz.yaml', 'nDodecane_IG', 'o2:1, n2:3.76', 'c12h26:1')
+# injector = Injector(600, 1600e5, fuel.composition_fuel, 350, 365, 3.2e-5)
+# turbocharger = Turbocharger(600, 1.3e5, 1.2e5, fuel.composition_air)
 
 class Reactor():
-    def __init__(self, fuel, turbocharger):
+    def __init__(self, fuel, turbocharger, engine):
+        self.engine = engine
         self.fuel = fuel
         self.turbocharger = turbocharger
 
@@ -27,7 +26,7 @@ class Reactor():
         self.gas.TPX = turbocharger.inlet_temp, turbocharger.inlet_pressure, turbocharger.inlet_composition
         #make reactor
         self.cylinder = ct.IdealGasReactor(self.gas)
-        self.cylinder.volume = engine.volume_combustion_dome
+        self.cylinder.volume = self.engine.volume_combustion_dome
 
         self.gas.TPX = turbocharger.inlet_temp, turbocharger.inlet_pressure, turbocharger.inlet_composition
         self.inlet_reservoir = ct.Reservoir(self.gas)
@@ -59,8 +58,8 @@ class Reactor():
 
         #Setting Piston as moving wall
         piston = ct.Wall(self.ambient_reservoir, self.cylinder)
-        piston.area = engine.area
-        piston.set_velocity(engine.get_piston_speed)
+        piston.area = self.engine.area
+        piston.set_velocity(self.engine.get_piston_speed)
 
     def create_sim(self):
         self.simulator = Simulator(8, 20, 1e-12, 1e-16, self.cylinder, 1, self.inlet_valve, self.outlet_valve, self.ambient_reservoir)
