@@ -1,12 +1,17 @@
+#PySide Stuff for GUI
 import sys
 from PySide6.QtUiTools import QUiLoader
 from PySide6.QtWidgets import QApplication, QFileDialog
 from PySide6.QtCore import QFile, QIODevice
 from GUI import *
 from EngineSimGUI_ui import Ui_MainWindow
+from PregenPlotsWindow_ui import Ui_PregenPlotsWindow
 from PySide6.QtWidgets import QMainWindow
 
-#My Imports
+#Plot!
+import matplotlib.pyplot as plt
+
+#Engine Sim Imports
 from Engine import Engine
 from Fuel import Fuel
 from Injector import Injector
@@ -22,6 +27,7 @@ class Window(QMainWindow):
 #fuel = Fuel('nDodecane_Reitz.yaml', 'nDodecane_IG', 'o2:1, n2:3.76', 'c12h26:1')
 # injector = Injector(600, 1600e5, fuel.composition_fuel, 350, 365, 3.2e-5)
 # turbocharger = Turbocharger(600, 1.3e5, 1.2e5, fuel.composition_air)
+
     def submitValues(self):
         #check if fields are filled here-----
 
@@ -36,6 +42,8 @@ class Window(QMainWindow):
 
         self.make_reactor()
         self.reactor.create_sim()
+
+        self.simulator = self.reactor.simulator
 
 
     def make_reactor(self):
@@ -84,7 +92,8 @@ class Window(QMainWindow):
         pass
 
     def pregeneratedPlots(self):
-        pass
+        self.pregenerated_window = PregeneratedWindow()
+        self.pregenerated_window.show()
 
     def newStudy(self):
         pass
@@ -97,6 +106,17 @@ class Window(QMainWindow):
         )
         ui.filebrowsefilename.setText(fileName)
 
+class PregeneratedWindow(QMainWindow):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.ui = Ui_PregenPlotsWindow()
+        self.ui.setupUi(self)
+
+        self.canvas = self.ui.matplotlibWidget.canvas
+
+        self.ui.matplotlibWidget.main = MainWindow
+
+    
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     MainWindow = Window()
