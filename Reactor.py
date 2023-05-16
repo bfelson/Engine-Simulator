@@ -11,13 +11,18 @@ from scipy.integrate import trapz
 # fuel = Fuel('nDodecane_Reitz.yaml', 'nDodecane_IG', 'o2:1, n2:3.76', 'c12h26:1')
 # injector = Injector(600, 1600e5, fuel.composition_fuel, 350, 365, 3.2e-5)
 # turbocharger = Turbocharger(600, 1.3e5, 1.2e5, fuel.composition_air)
+# inlet = xLet('inlet', 1e-6, -18, 198)
+# outlet = xLet('outlet', 1e-6, 522, 18)
 
 class Reactor():
-    def __init__(self, fuel, turbocharger, engine, injector):
+    def __init__(self, fuel, turbocharger, engine, injector, inlet, outlet):
         self.engine = engine
         self.fuel = fuel
         self.turbocharger = turbocharger
         self.injector = injector
+
+        self.inlet = inlet
+        self.outlet = outlet
 
         self.runSimulation = False
         #store thermodynamic state of fuel
@@ -33,8 +38,8 @@ class Reactor():
         self.inlet_reservoir = ct.Reservoir(self.gas)
         #Create outlet valve
         self.inlet_valve = ct.Valve(self.inlet_reservoir, self.cylinder)
-        self.inlet_valve.valve_coeff = inlet.valve_coefficient
-        self.inlet_valve.set_time_function(inlet.isOpen)
+        self.inlet_valve.valve_coeff = self.inlet.valve_coefficient
+        self.inlet_valve.set_time_function(self.inlet.isOpen)
 
         #Injector Stuff
         self.gas.TPX = self.injector.temperature, self.injector.pressure, self.injector.composition
@@ -50,8 +55,8 @@ class Reactor():
 
         #Create Outlet Valve
         self.outlet_valve = ct.Valve(self.cylinder, self.outlet_reservoir)
-        self.outlet_valve.valve_coeff = outlet.valve_coefficient
-        self.outlet_valve.set_time_function(outlet.isOpen)
+        self.outlet_valve.valve_coeff = self.outlet.valve_coefficient
+        self.outlet_valve.set_time_function(self.outlet.isOpen)
 
         #Ambient Stuff
         self.gas.TPX = ambient.temperature, ambient.pressure, ambient.composition
@@ -63,7 +68,7 @@ class Reactor():
         piston.set_velocity(self.engine.get_piston_speed)
 
     def create_sim(self):
-        self.simulator = Simulator(8, 20, 1e-12, 1e-16, self.cylinder, 1, self.inlet_valve, self.outlet_valve, self.ambient_reservoir)
+        self.simulator = Simulator(8, 20, 1e-12, 1e-16, self.cylinder, 1, self.inlet_valve, self.outlet_valve, self.ambient_reservoir, self.engine)
         self.cylinder.set_advance_limit('temperature', self.simulator.max_delta_t)
 
     def run_sim(self):

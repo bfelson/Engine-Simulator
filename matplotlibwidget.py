@@ -14,35 +14,27 @@ from matplotlib.backends.backend_qt5agg import FigureCanvas
 from matplotlib.figure import Figure
 import matplotlib.pyplot as plt
 
-class Canvas(FigureCanvas):
-    def __init__(self, parent):
-        fig, self.ax = plt.subplots()
-        super().__init__(fig)
-        self.setParent(parent)
+# class Canvas(FigureCanvas):
+#     def __init__(self, parent):
+#         self.fig, self.ax = plt.subplots()
+#         super().__init__(self.fig)
+#         self.setParent(parent)
 
-    def plot(self, x, y, xlabel, ylabel, title):
-        self.ax.plot(x, y)
-        self.set_xlabel(xlabel)
-        self.set_ylabel(ylabel)
-        self.title(title)
+#     def plot(self, x, y, xlabel, ylabel, title):
+#         self.ax.plot(x, y)
+#         self.ax.set_xlabel(xlabel)
+#         self.ax.set_ylabel(ylabel)
+#         self.ax.set_title(title)
+#         self.show()
 
 class matplotlibWidget(QWidget):
     def __init__(self, parent = None):
         QWidget.__init__(self, parent)
-        self.canvas = Canvas(self)
-        
-        vertical_layout = QVBoxLayout()
-        vertical_layout.addWidget(self.canvas)
-        
-        self.setLayout(vertical_layout)
-
-        self.main = None
+        # self.canvas = Canvas(self)
 
     def plot_ca_pressure(self):
-        self.canvas.plot(
-            self.main.simulator.t,
-            self.main.simulator.states.P,
-            r'$\phi$ (rad)',
-            '$T$ (K)',
-            'Pressure vs. Crank Angle'
-        )
+        fig, ax = plt.subplots()
+        ax.plot(self.main.simulator.states.t, self.main.simulator.states.P)
+        ax.set_xlabel(r'$\phi$ (deg)')
+        ax.set_ylabel("Pressure (Pa)")
+        plt.show()

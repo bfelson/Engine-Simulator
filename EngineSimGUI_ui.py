@@ -17,31 +17,48 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QFrame, QGridLayout, QHBoxLayout,
     QLabel, QLayout, QLineEdit, QMainWindow,
-    QMenuBar, QPushButton, QSizePolicy, QStatusBar,
-    QToolButton, QVBoxLayout, QWidget)
+    QMenuBar, QPushButton, QScrollArea, QSizePolicy,
+    QStatusBar, QToolButton, QVBoxLayout, QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1265, 958)
+        MainWindow.resize(1093, 1182)
         MainWindow.setDocumentMode(False)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
-        sizePolicy = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Preferred)
+        sizePolicy = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.centralwidget.sizePolicy().hasHeightForWidth())
         self.centralwidget.setSizePolicy(sizePolicy)
         self.verticalLayout_32 = QVBoxLayout(self.centralwidget)
         self.verticalLayout_32.setObjectName(u"verticalLayout_32")
-        self.bigframe = QFrame(self.centralwidget)
-        self.bigframe.setObjectName(u"bigframe")
-        sizePolicy1 = QSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding)
+        self.scrollArea = QScrollArea(self.centralwidget)
+        self.scrollArea.setObjectName(u"scrollArea")
+        sizePolicy1 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
         sizePolicy1.setHorizontalStretch(0)
         sizePolicy1.setVerticalStretch(0)
+        sizePolicy1.setHeightForWidth(self.scrollArea.sizePolicy().hasHeightForWidth())
+        self.scrollArea.setSizePolicy(sizePolicy1)
+        self.scrollArea.setWidgetResizable(True)
+        self.scrollArea.setAlignment(Qt.AlignHCenter|Qt.AlignTop)
+        self.scrollAreaWidgetContents = QWidget()
+        self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, -28, 1067, 1095))
+        sizePolicy2 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Minimum)
+        sizePolicy2.setHorizontalStretch(0)
+        sizePolicy2.setVerticalStretch(0)
+        sizePolicy2.setHeightForWidth(self.scrollAreaWidgetContents.sizePolicy().hasHeightForWidth())
+        self.scrollAreaWidgetContents.setSizePolicy(sizePolicy2)
+        self.horizontalLayout_11 = QHBoxLayout(self.scrollAreaWidgetContents)
+        self.horizontalLayout_11.setObjectName(u"horizontalLayout_11")
+        self.bigframe = QFrame(self.scrollAreaWidgetContents)
+        self.bigframe.setObjectName(u"bigframe")
         sizePolicy1.setHeightForWidth(self.bigframe.sizePolicy().hasHeightForWidth())
         self.bigframe.setSizePolicy(sizePolicy1)
+        self.bigframe.setMinimumSize(QSize(0, 600))
         self.bigframe.setMaximumSize(QSize(16777215, 16777215))
         self.bigframe.setAutoFillBackground(True)
         self.bigframe.setFrameShape(QFrame.NoFrame)
@@ -51,11 +68,9 @@ class Ui_MainWindow(object):
         self.verticalLayout_31.setSpacing(0)
         self.verticalLayout_31.setObjectName(u"verticalLayout_31")
         self.verticalLayout_31.setSizeConstraint(QLayout.SetNoConstraint)
+        self.verticalLayout_31.setContentsMargins(0, 0, 0, 0)
         self.enginesettings = QFrame(self.bigframe)
         self.enginesettings.setObjectName(u"enginesettings")
-        sizePolicy2 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Minimum)
-        sizePolicy2.setHorizontalStretch(0)
-        sizePolicy2.setVerticalStretch(0)
         sizePolicy2.setHeightForWidth(self.enginesettings.sizePolicy().hasHeightForWidth())
         self.enginesettings.setSizePolicy(sizePolicy2)
         self.enginesettings.setFrameShape(QFrame.StyledPanel)
@@ -732,6 +747,163 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_22.addWidget(self.turbopropsframe)
 
+        self.frame_3 = QFrame(self.turbosettingsframe)
+        self.frame_3.setObjectName(u"frame_3")
+        self.frame_3.setFont(font1)
+        self.frame_3.setFrameShape(QFrame.StyledPanel)
+        self.frame_3.setFrameShadow(QFrame.Raised)
+        self.verticalLayout_38 = QVBoxLayout(self.frame_3)
+        self.verticalLayout_38.setObjectName(u"verticalLayout_38")
+        self.xletsettingslabel = QLabel(self.frame_3)
+        self.xletsettingslabel.setObjectName(u"xletsettingslabel")
+        font2 = QFont()
+        font2.setBold(True)
+        self.xletsettingslabel.setFont(font2)
+        self.xletsettingslabel.setAlignment(Qt.AlignCenter)
+
+        self.verticalLayout_38.addWidget(self.xletsettingslabel)
+
+        self.frame_2 = QFrame(self.frame_3)
+        self.frame_2.setObjectName(u"frame_2")
+        self.frame_2.setFrameShape(QFrame.StyledPanel)
+        self.frame_2.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout_4 = QHBoxLayout(self.frame_2)
+        self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
+        self.frame_4 = QFrame(self.frame_2)
+        self.frame_4.setObjectName(u"frame_4")
+        self.frame_4.setFrameShape(QFrame.StyledPanel)
+        self.frame_4.setFrameShadow(QFrame.Raised)
+        self.verticalLayout_35 = QVBoxLayout(self.frame_4)
+        self.verticalLayout_35.setObjectName(u"verticalLayout_35")
+        self.verticalLayout_35.setContentsMargins(-1, 0, -1, 0)
+        self.label = QLabel(self.frame_4)
+        self.label.setObjectName(u"label")
+
+        self.verticalLayout_35.addWidget(self.label)
+
+        self.inletvalvecoefficientedit = QLineEdit(self.frame_4)
+        self.inletvalvecoefficientedit.setObjectName(u"inletvalvecoefficientedit")
+
+        self.verticalLayout_35.addWidget(self.inletvalvecoefficientedit)
+
+
+        self.horizontalLayout_4.addWidget(self.frame_4)
+
+        self.frame_5 = QFrame(self.frame_2)
+        self.frame_5.setObjectName(u"frame_5")
+        self.frame_5.setFrameShape(QFrame.StyledPanel)
+        self.frame_5.setFrameShadow(QFrame.Raised)
+        self.verticalLayout_36 = QVBoxLayout(self.frame_5)
+        self.verticalLayout_36.setObjectName(u"verticalLayout_36")
+        self.verticalLayout_36.setContentsMargins(-1, 0, -1, 0)
+        self.label_2 = QLabel(self.frame_5)
+        self.label_2.setObjectName(u"label_2")
+
+        self.verticalLayout_36.addWidget(self.label_2)
+
+        self.inletopentimingedit = QLineEdit(self.frame_5)
+        self.inletopentimingedit.setObjectName(u"inletopentimingedit")
+
+        self.verticalLayout_36.addWidget(self.inletopentimingedit)
+
+
+        self.horizontalLayout_4.addWidget(self.frame_5)
+
+        self.frame_6 = QFrame(self.frame_2)
+        self.frame_6.setObjectName(u"frame_6")
+        self.frame_6.setFrameShape(QFrame.StyledPanel)
+        self.frame_6.setFrameShadow(QFrame.Raised)
+        self.verticalLayout_37 = QVBoxLayout(self.frame_6)
+        self.verticalLayout_37.setObjectName(u"verticalLayout_37")
+        self.verticalLayout_37.setContentsMargins(-1, 0, -1, 0)
+        self.label_3 = QLabel(self.frame_6)
+        self.label_3.setObjectName(u"label_3")
+
+        self.verticalLayout_37.addWidget(self.label_3)
+
+        self.inletclosetimingedit = QLineEdit(self.frame_6)
+        self.inletclosetimingedit.setObjectName(u"inletclosetimingedit")
+
+        self.verticalLayout_37.addWidget(self.inletclosetimingedit)
+
+
+        self.horizontalLayout_4.addWidget(self.frame_6)
+
+
+        self.verticalLayout_38.addWidget(self.frame_2)
+
+        self.frame_8 = QFrame(self.frame_3)
+        self.frame_8.setObjectName(u"frame_8")
+        self.frame_8.setFrameShape(QFrame.StyledPanel)
+        self.frame_8.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout_6 = QHBoxLayout(self.frame_8)
+        self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
+        self.frame_7 = QFrame(self.frame_8)
+        self.frame_7.setObjectName(u"frame_7")
+        self.frame_7.setFrameShape(QFrame.StyledPanel)
+        self.frame_7.setFrameShadow(QFrame.Raised)
+        self.verticalLayout_39 = QVBoxLayout(self.frame_7)
+        self.verticalLayout_39.setObjectName(u"verticalLayout_39")
+        self.verticalLayout_39.setContentsMargins(-1, 0, -1, 0)
+        self.label_5 = QLabel(self.frame_7)
+        self.label_5.setObjectName(u"label_5")
+
+        self.verticalLayout_39.addWidget(self.label_5)
+
+        self.outletvalvecoefficientedit = QLineEdit(self.frame_7)
+        self.outletvalvecoefficientedit.setObjectName(u"outletvalvecoefficientedit")
+
+        self.verticalLayout_39.addWidget(self.outletvalvecoefficientedit)
+
+
+        self.horizontalLayout_6.addWidget(self.frame_7)
+
+        self.frame_9 = QFrame(self.frame_8)
+        self.frame_9.setObjectName(u"frame_9")
+        self.frame_9.setFrameShape(QFrame.StyledPanel)
+        self.frame_9.setFrameShadow(QFrame.Raised)
+        self.verticalLayout_40 = QVBoxLayout(self.frame_9)
+        self.verticalLayout_40.setObjectName(u"verticalLayout_40")
+        self.verticalLayout_40.setContentsMargins(-1, 0, -1, 0)
+        self.label_6 = QLabel(self.frame_9)
+        self.label_6.setObjectName(u"label_6")
+
+        self.verticalLayout_40.addWidget(self.label_6)
+
+        self.outletopentimingedit = QLineEdit(self.frame_9)
+        self.outletopentimingedit.setObjectName(u"outletopentimingedit")
+
+        self.verticalLayout_40.addWidget(self.outletopentimingedit)
+
+
+        self.horizontalLayout_6.addWidget(self.frame_9)
+
+        self.frame_10 = QFrame(self.frame_8)
+        self.frame_10.setObjectName(u"frame_10")
+        self.frame_10.setFrameShape(QFrame.StyledPanel)
+        self.frame_10.setFrameShadow(QFrame.Raised)
+        self.verticalLayout_41 = QVBoxLayout(self.frame_10)
+        self.verticalLayout_41.setObjectName(u"verticalLayout_41")
+        self.verticalLayout_41.setContentsMargins(-1, 0, -1, 0)
+        self.label_7 = QLabel(self.frame_10)
+        self.label_7.setObjectName(u"label_7")
+
+        self.verticalLayout_41.addWidget(self.label_7)
+
+        self.outletclosetimingedit = QLineEdit(self.frame_10)
+        self.outletclosetimingedit.setObjectName(u"outletclosetimingedit")
+
+        self.verticalLayout_41.addWidget(self.outletclosetimingedit)
+
+
+        self.horizontalLayout_6.addWidget(self.frame_10)
+
+
+        self.verticalLayout_38.addWidget(self.frame_8)
+
+
+        self.verticalLayout_22.addWidget(self.frame_3)
+
 
         self.verticalLayout_31.addWidget(self.turbosettingsframe)
 
@@ -748,37 +920,31 @@ class Ui_MainWindow(object):
         self.horizontalLayout_3.setContentsMargins(-1, 0, -1, 0)
         self.checkvalues = QPushButton(self.buttonsframe)
         self.checkvalues.setObjectName(u"checkvalues")
-        font2 = QFont()
-        font2.setFamilies([u"Cambria"])
-        font2.setPointSize(10)
-        font2.setBold(True)
-        font2.setItalic(False)
-        font2.setKerning(True)
-        self.checkvalues.setFont(font2)
+        font3 = QFont()
+        font3.setFamilies([u"Cambria"])
+        font3.setPointSize(10)
+        font3.setBold(True)
+        font3.setItalic(False)
+        font3.setKerning(True)
+        self.checkvalues.setFont(font3)
 
         self.horizontalLayout_3.addWidget(self.checkvalues)
 
         self.runsim = QPushButton(self.buttonsframe)
         self.runsim.setObjectName(u"runsim")
-        self.runsim.setFont(font2)
+        self.runsim.setFont(font3)
 
         self.horizontalLayout_3.addWidget(self.runsim)
 
-        self.plotsomething = QPushButton(self.buttonsframe)
-        self.plotsomething.setObjectName(u"plotsomething")
-        self.plotsomething.setFont(font2)
-
-        self.horizontalLayout_3.addWidget(self.plotsomething)
-
         self.generatedPlots = QPushButton(self.buttonsframe)
         self.generatedPlots.setObjectName(u"generatedPlots")
-        self.generatedPlots.setFont(font2)
+        self.generatedPlots.setFont(font3)
 
         self.horizontalLayout_3.addWidget(self.generatedPlots)
 
         self.createstudy = QPushButton(self.buttonsframe)
         self.createstudy.setObjectName(u"createstudy")
-        self.createstudy.setFont(font2)
+        self.createstudy.setFont(font3)
 
         self.horizontalLayout_3.addWidget(self.createstudy)
 
@@ -786,13 +952,17 @@ class Ui_MainWindow(object):
         self.verticalLayout_31.addWidget(self.buttonsframe)
 
 
-        self.verticalLayout_32.addWidget(self.bigframe)
+        self.horizontalLayout_11.addWidget(self.bigframe)
+
+        self.scrollArea.setWidget(self.scrollAreaWidgetContents)
+
+        self.verticalLayout_32.addWidget(self.scrollArea)
 
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
         self.menubar.setEnabled(False)
-        self.menubar.setGeometry(QRect(0, 0, 1265, 31))
+        self.menubar.setGeometry(QRect(0, 0, 1093, 31))
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName(u"statusbar")
@@ -801,7 +971,6 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         self.checkvalues.clicked.connect(MainWindow.submitValues)
         self.runsim.clicked.connect(MainWindow.startSimulation)
-        self.plotsomething.clicked.connect(MainWindow.plotValues)
         self.generatedPlots.clicked.connect(MainWindow.pregeneratedPlots)
         self.createstudy.clicked.connect(MainWindow.newStudy)
         self.filebrowsebutton.clicked.connect(MainWindow.selectFile)
@@ -851,9 +1020,21 @@ class Ui_MainWindow(object):
         self.turbooutlettempedit.setPlaceholderText(QCoreApplication.translate("MainWindow", u"1.2e5", None))
         self.turbooutletpressurelabel.setText(QCoreApplication.translate("MainWindow", u"Inlet Composition (air)", None))
         self.turbooutletedit.setPlaceholderText(QCoreApplication.translate("MainWindow", u"o2:1, n2:3.76", None))
+        self.xletsettingslabel.setText(QCoreApplication.translate("MainWindow", u"Valve Inlet/Outlet Settings", None))
+        self.label.setText(QCoreApplication.translate("MainWindow", u"Inlet Valve Coefficient", None))
+        self.inletvalvecoefficientedit.setPlaceholderText(QCoreApplication.translate("MainWindow", u"1e-6", None))
+        self.label_2.setText(QCoreApplication.translate("MainWindow", u"Inlet Open Timing (deg 0-360)", None))
+        self.inletopentimingedit.setPlaceholderText(QCoreApplication.translate("MainWindow", u"-18", None))
+        self.label_3.setText(QCoreApplication.translate("MainWindow", u"Inlet Close Timing (deg 0-360)", None))
+        self.inletclosetimingedit.setPlaceholderText(QCoreApplication.translate("MainWindow", u"198", None))
+        self.label_5.setText(QCoreApplication.translate("MainWindow", u"Outlet Valve Coefficient", None))
+        self.outletvalvecoefficientedit.setPlaceholderText(QCoreApplication.translate("MainWindow", u"1e-6", None))
+        self.label_6.setText(QCoreApplication.translate("MainWindow", u"Outlet Open Timing (deg 0-360)", None))
+        self.outletopentimingedit.setPlaceholderText(QCoreApplication.translate("MainWindow", u"522", None))
+        self.label_7.setText(QCoreApplication.translate("MainWindow", u"Outlet Close Timing (deg 0-360)", None))
+        self.outletclosetimingedit.setPlaceholderText(QCoreApplication.translate("MainWindow", u"18", None))
         self.checkvalues.setText(QCoreApplication.translate("MainWindow", u"Submit Values", None))
         self.runsim.setText(QCoreApplication.translate("MainWindow", u"Start Simulation", None))
-        self.plotsomething.setText(QCoreApplication.translate("MainWindow", u"Plot Values", None))
         self.generatedPlots.setText(QCoreApplication.translate("MainWindow", u"Pre-Generated Plots", None))
         self.createstudy.setText(QCoreApplication.translate("MainWindow", u"Create a New Study", None))
     # retranslateUi

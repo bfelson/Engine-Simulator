@@ -19,13 +19,16 @@ from PySide6.QtWidgets import (QApplication, QFrame, QHBoxLayout, QLabel,
     QMainWindow, QMenuBar, QPushButton, QSizePolicy,
     QStatusBar, QVBoxLayout, QWidget)
 
-from matplotlibwidget import matplotlibWidget
-
 class Ui_PregenPlotsWindow(object):
     def setupUi(self, PregenPlotsWindow):
         if not PregenPlotsWindow.objectName():
             PregenPlotsWindow.setObjectName(u"PregenPlotsWindow")
-        PregenPlotsWindow.resize(889, 667)
+        PregenPlotsWindow.resize(559, 667)
+        sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(PregenPlotsWindow.sizePolicy().hasHeightForWidth())
+        PregenPlotsWindow.setSizePolicy(sizePolicy)
         self.centralwidget = QWidget(PregenPlotsWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.verticalLayout_2 = QVBoxLayout(self.centralwidget)
@@ -49,11 +52,11 @@ class Ui_PregenPlotsWindow(object):
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.frame = QFrame(self.frame_2)
         self.frame.setObjectName(u"frame")
-        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.frame.sizePolicy().hasHeightForWidth())
-        self.frame.setSizePolicy(sizePolicy)
+        sizePolicy1 = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Preferred)
+        sizePolicy1.setHorizontalStretch(0)
+        sizePolicy1.setVerticalStretch(0)
+        sizePolicy1.setHeightForWidth(self.frame.sizePolicy().hasHeightForWidth())
+        self.frame.setSizePolicy(sizePolicy1)
         self.frame.setFrameShape(QFrame.StyledPanel)
         self.frame.setFrameShadow(QFrame.Raised)
         self.verticalLayout = QVBoxLayout(self.frame)
@@ -118,35 +121,37 @@ class Ui_PregenPlotsWindow(object):
 
         self.horizontalLayout.addWidget(self.frame)
 
-        self.matplotlibWidget = matplotlibWidget(self.frame_2)
-        self.matplotlibWidget.setObjectName(u"matplotlibWidget")
-        self.matplotlibWidget.setMinimumSize(QSize(480, 480))
-
-        self.horizontalLayout.addWidget(self.matplotlibWidget)
-
 
         self.verticalLayout_2.addWidget(self.frame_2)
 
-        self.label_2 = QLabel(self.centralwidget)
-        self.label_2.setObjectName(u"label_2")
+        self.svalueoutput = QLabel(self.centralwidget)
+        self.svalueoutput.setObjectName(u"svalueoutput")
         font2 = QFont()
         font2.setFamilies([u"Cambria"])
         font2.setPointSize(16)
-        self.label_2.setFont(font2)
+        self.svalueoutput.setFont(font2)
 
-        self.verticalLayout_2.addWidget(self.label_2)
+        self.verticalLayout_2.addWidget(self.svalueoutput)
 
         PregenPlotsWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(PregenPlotsWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 889, 31))
+        self.menubar.setGeometry(QRect(0, 0, 559, 31))
         PregenPlotsWindow.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(PregenPlotsWindow)
         self.statusbar.setObjectName(u"statusbar")
         PregenPlotsWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(PregenPlotsWindow)
-        self.pushButton.clicked.connect(self.matplotlibWidget.plot_ca_pressure)
+        self.pushButton.clicked.connect(PregenPlotsWindow.plot_ca_pressure)
+        self.pushButton_2.clicked.connect(PregenPlotsWindow.plot_ca_temp)
+        self.pushButton_3.clicked.connect(PregenPlotsWindow.plot_pv_diagram)
+        self.pushButton_4.clicked.connect(PregenPlotsWindow.plot_ts_diagram)
+        self.pushButton_5.clicked.connect(PregenPlotsWindow.plot_QW)
+        self.pushButton_6.clicked.connect(PregenPlotsWindow.plot_gas_composition)
+        self.pushButton_7.clicked.connect(PregenPlotsWindow.heat_release)
+        self.pushButton_8.clicked.connect(PregenPlotsWindow.expansion_power)
+        self.pushButton_9.clicked.connect(PregenPlotsWindow.efficiency)
 
         QMetaObject.connectSlotsByName(PregenPlotsWindow)
     # setupUi
@@ -163,6 +168,6 @@ class Ui_PregenPlotsWindow(object):
         self.pushButton_7.setText(QCoreApplication.translate("PregenPlotsWindow", u"Heat Release", None))
         self.pushButton_8.setText(QCoreApplication.translate("PregenPlotsWindow", u"Expansion Power", None))
         self.pushButton_9.setText(QCoreApplication.translate("PregenPlotsWindow", u"Efficiency", None))
-        self.label_2.setText(QCoreApplication.translate("PregenPlotsWindow", u"Space for Single Value Outputs", None))
+        self.svalueoutput.setText(QCoreApplication.translate("PregenPlotsWindow", u"Space for Single Value Outputs", None))
     # retranslateUi
 

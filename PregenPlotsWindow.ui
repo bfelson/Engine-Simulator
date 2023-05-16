@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>889</width>
+    <width>559</width>
     <height>667</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
@@ -177,21 +183,11 @@
          </layout>
         </widget>
        </item>
-       <item>
-        <widget class="matplotlibWidget" name="matplotlibWidget" native="true">
-         <property name="minimumSize">
-          <size>
-           <width>480</width>
-           <height>480</height>
-          </size>
-         </property>
-        </widget>
-       </item>
       </layout>
      </widget>
     </item>
     <item>
-     <widget class="QLabel" name="label_2">
+     <widget class="QLabel" name="svalueoutput">
       <property name="font">
        <font>
         <family>Cambria</family>
@@ -210,44 +206,169 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>889</width>
+     <width>559</width>
      <height>31</height>
     </rect>
    </property>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>matplotlibWidget</class>
-   <extends>QWidget</extends>
-   <header>matplotlibwidget.h</header>
-   <container>1</container>
-   <slots>
-    <slot>plot_ca_pressure()</slot>
-   </slots>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections>
   <connection>
    <sender>pushButton</sender>
    <signal>clicked()</signal>
-   <receiver>matplotlibWidget</receiver>
+   <receiver>PregenPlotsWindow</receiver>
    <slot>plot_ca_pressure()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>258</x>
-     <y>140</y>
+     <x>207</x>
+     <y>162</y>
     </hint>
     <hint type="destinationlabel">
-     <x>506</x>
-     <y>245</y>
+     <x>141</x>
+     <y>35</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>PregenPlotsWindow</receiver>
+   <slot>plot_ca_temp()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>237</x>
+     <y>199</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>253</x>
+     <y>37</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_3</sender>
+   <signal>clicked()</signal>
+   <receiver>PregenPlotsWindow</receiver>
+   <slot>plot_pv_diagram()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>322</x>
+     <y>252</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>395</x>
+     <y>36</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_4</sender>
+   <signal>clicked()</signal>
+   <receiver>PregenPlotsWindow</receiver>
+   <slot>plot_ts_diagram()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>284</x>
+     <y>295</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>529</x>
+     <y>37</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_5</sender>
+   <signal>clicked()</signal>
+   <receiver>PregenPlotsWindow</receiver>
+   <slot>plot_QW()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>301</x>
+     <y>333</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>7</x>
+     <y>103</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_6</sender>
+   <signal>clicked()</signal>
+   <receiver>PregenPlotsWindow</receiver>
+   <slot>plot_gas_composition()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>325</x>
+     <y>383</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>553</x>
+     <y>93</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_7</sender>
+   <signal>clicked()</signal>
+   <receiver>PregenPlotsWindow</receiver>
+   <slot>heat_release()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>247</x>
+     <y>422</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>550</x>
+     <y>618</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_8</sender>
+   <signal>clicked()</signal>
+   <receiver>PregenPlotsWindow</receiver>
+   <slot>expansion_power()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>310</x>
+     <y>465</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>552</x>
+     <y>591</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_9</sender>
+   <signal>clicked()</signal>
+   <receiver>PregenPlotsWindow</receiver>
+   <slot>efficiency()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>205</x>
+     <y>496</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>27</x>
+     <y>35</y>
     </hint>
    </hints>
   </connection>
  </connections>
  <slots>
   <slot>plot_ca_pressure()</slot>
+  <slot>plot_ca_temp()</slot>
+  <slot>plot_pv_diagram()</slot>
+  <slot>plot_ts_diagram()</slot>
+  <slot>plot_QW()</slot>
+  <slot>plot_gas_composition()</slot>
+  <slot>heat_release()</slot>
+  <slot>expansion_power()</slot>
+  <slot>efficiency()</slot>
  </slots>
 </ui>

@@ -5,7 +5,8 @@ from Ambient import *
 
 class Simulator():
     def __init__(self, number_revolutions, max_delta_t, rtol, atol, cylinder, 
-                 max_resolution, inlet_valve, outlet_valve, ambient_reservoir):
+                 max_resolution, inlet_valve, outlet_valve, ambient_reservoir, engine):
+        self.engine = engine
         self.number_revolutions = number_revolutions
         self.max_delta_t = max_delta_t
         self.rtol = rtol
@@ -29,17 +30,17 @@ class Simulator():
             extra=('t', 'ca', 'V', 'm', 'mdot_in', 'mdot_out', 'dWv_dt')
         )
 
-        dt = self.max_resolution / (360 * engine.engine_speed)
-        time_stop = self.number_revolutions / engine.engine_speed
+        dt = self.max_resolution / (360 * self.engine.engine_speed)
+        time_stop = self.number_revolutions / self.engine.engine_speed
 
         while self.reactorNet.time < time_stop:
             self.reactorNet.advance(self.reactorNet.time + dt)
 
-            dWv_dt = - (self.cylinder.thermo.P - self.ambient_reservoir.thermo.P) * engine.area * engine.get_piston_speed(self.reactorNet.time)
+            dWv_dt = - (self.cylinder.thermo.P - self.ambient_reservoir.thermo.P) * self.engine.area * self.engine.get_piston_speed(self.reactorNet.time)
 
             self.states.append( self.cylinder.thermo.state,
                                 t = self.reactorNet.time,
-                                ca = engine.get_crank_angle(self.reactorNet.time),
+                                ca = self.engine.get_crank_angle(self.reactorNet.time),
                                 V = self.cylinder.volume,
                                 m = self.cylinder.mass,
                                 mdot_in = self.inlet_valve.mass_flow_rate,
