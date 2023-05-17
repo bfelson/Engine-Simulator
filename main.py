@@ -7,6 +7,7 @@ from GUI import *
 from EngineSimGUI_ui import Ui_MainWindow
 from PregenPlotsWindow_ui import Ui_PregenPlotsWindow
 from PySide6.QtWidgets import QMainWindow
+from NewStudy_ui import Ui_newStudy
 
 #Plot!
 import matplotlib.pyplot as plt
@@ -37,16 +38,32 @@ class Window(QMainWindow):
 
 
     def make_components(self):
+        print("Making Engine...")
         self.make_engine()
+        print("Engine Complete!")
+        print("Making Fuel...")
         self.make_fuel()
+        print("Fuel Complete!")
+        print("Making Fuel Injector...")
         self.make_injector()
+        print("Injector Complete!")
+        print("Making Turbocharger")
         self.make_turbocharger()
+        print("Turbocharger Complete!")
 
+        print("Making Inlet...")
         self.make_inlet()
+        print("Inlet Complete!")
+        print("Making Outlet")
         self.make_outlet()
+        print("Outlet Complete!")
 
+        print("Generating Reactor...")
         self.make_reactor()
+        print("Reactor Created!")
+        print("Creating Simulator...")
         self.reactor.create_sim()
+        print("Simulator Complete!")
 
         self.simulator = self.reactor.simulator
 
@@ -114,15 +131,14 @@ class Window(QMainWindow):
         self.reactor.run_sim()
         print("Simulation Done!")
 
-    def plotValues(self):
-        pass
 
     def pregeneratedPlots(self):
         self.pregenerated_window = PregeneratedWindow()
         self.pregenerated_window.show()
 
     def newStudy(self):
-        pass
+        self.newstudy_window = NewStudyWindow()
+        self.newstudy_window.show()
 
     def selectFile(self):
         dialog = QFileDialog()
@@ -174,7 +190,7 @@ class PregeneratedWindow(QMainWindow):
         ax.plot(self.sim.states.m[self.s.t > 0.04] * self.sim.states.s[self.s.t > 0.04], self.sim.states.T[self.s.t > 0.04])
         ax.set_xlabel("$S$ (J/K)")
         ax.set_ylabel("$T$ (K)")
-        ax.title('T-S Diagram')
+        ax.set_title('T-S Diagram')
         plt.show()
 
     def plot_QW(self):
@@ -232,6 +248,108 @@ class PregeneratedWindow(QMainWindow):
         CO2_emission /= trapz(MW * self.sim.states.mdot_out, self.s.t)
         self.ui.svalueoutput.setText('CO2 emission (estimate):', CO2_emission * 1.e6, 'ppm')
         return CO2_emission
+
+class NewStudyWindow(QMainWindow):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.ui = Ui_newStudy()
+        self.ui.setupUi(self)
+
+        self.main = MainWindow
+
+    def heat_release(self):
+            Q = trapz(self.sim.states.heat_release_rate * self.sim.states.V, self.s.t)
+            output_format = '{:45s}{:>4.1f} {}'
+            self.ui.svalueoutput.setText(output_format.format('Heat Release per Cylinder (est.): ', Q / self.s.t[-1] / 1000., 'kW'))
+            return Q / self.s.t[-1] / 1000
+
+    def expansion_power(self):
+        W = trapz(self.sim.states.dWv_dt, self.s.t)
+        output_format = '{:45s}{:>4.1f} {}'
+        self.ui.svalueoutput.setText(output_format.format('Expansion power per cylinder (est.)', W / self.s.t[-1] / 1000., 'kW'))
+        return W / self.s.t[-1] / 1000
+
+    def efficiency(self):
+        W = trapz(self.sim.states.dWv_dt, self.s.t)
+        Q = trapz(self.sim.states.heat_release_rate * self.sim.states.V, self.s.t)
+        output_format = '{:45s}{:>4.1f} {}'
+        self.ui.svalueoutput.setText(output_format.format('Efficiency (est.): ', W/Q * 100, '%'))
+        return W/Q * 100
+
+    def plot_CO(self):
+        MW = self.sim.states.mean_molecular_weight
+        CO_emission = trapz(MW * self.sim.states.mdot_out * self.sim.states('CO').X[:, 0], self.s.t)
+        CO_emission /= trapz(MW * self.sim.states.mdot_out, self.s.t)
+        self.ui.svalueoutput.setText('CO emission (estimate):', CO_emission * 1.e6, 'ppm')
+        return CO_emission
+
+    def plot_CO2(self):
+        MW = self.sim.states.mean_molecular_weight
+        CO2_emission = trapz(MW * self.sim.states.mdot_out * self.sim.states('CO2').X[:, 0], self.s.t)
+        CO2_emission /= trapz(MW * self.sim.states.mdot_out, self.s.t)
+        self.ui.svalueoutput.setText('CO2 emission (estimate):', CO2_emission * 1.e6, 'ppm')
+        return CO2_emission
+
+    def runStudy(self):
+        print("Setting up Parameters...")
+
+        self.propertyToVary = self.ui.propertyToVary.currentText()
+
+        self.min = int(self.ui.minedit.text())
+        self.max = int(self.ui.maxedit.text())
+        self.step = int(self.ui.stepedit.text())
+
+        self.values = []
+        self.co_emissions = []
+        self.co2_emissions = []
+        self.efficiency_list = []
+        self.expansion_power_list = []
+        self.heat_release_list = []
+
+        print("Parameters set!")
+        print("Running Study...")
+
+        self.mainui = self.main.ui
+
+        for i in range(self.min, self.max, self.step):
+            print("Creating Reactor for " + self.propertyToVary + " = " + str(i))
+            self.main.make_components()
+            self.main.engine = Engine(
+                self.main.engine.bore,
+                self.main.engine.stroke,
+                float(i), 
+                self.main.engine.cylinder_count
+            )
+            self.main.make_reactor()
+            self.main.reactor.create_sim()
+            self.simulator = self.main.reactor.simulator
+
+            print("Running Simulation for  " + self.propertyToVary + " = " + str(i))
+            self.main.reactor.run_sim()
+            print("Simulation Successful! Appending Data")
+            self.values.append(i)
+            self.co_emissions.append(self.main.reactor.CO_emissions)
+            self.co2_emissions.append(self.main.reactor.CO2_emissions)
+            self.efficiency_list.append(self.main.reactor.eta)
+            self.heat_release_list.append(self.main.reactor.Q)
+            self.expansion_power_list.append(self.main.reactor.W)
+
+        self.plot_all()
+
+    def plot(self, x, y, xlabel, ylabel, title):
+        fig, ax = plt.subplots()
+        ax.plot(x,y)
+        ax.set_xlabel(xlabel)
+        ax.set_ylabel(ylabel)
+        ax.set_title(title)
+        plt.show()
+
+    def plot_all(self):
+        self.plot(self.values, self.co_emissions, "Compression Ratio", "CO Emissions (ppm)", "CO Emissions vs Compression Ratio")
+        self.plot(self.values, self.co2_emissions, "Compression Ratio", "CO2 Emissions (ppm)", "CO2 Emissions vs Compression Ratio")
+        self.plot(self.values, self.efficiency_list, "Compression Ratio", "Efficiency (%)", "Efficiency vs Compression Ratio")
+        self.plot(self.values, self.heat_release_list, "Compression Ratio", "Heat Release (kW)", "Heat Release vs Compression Ratio")
+        self.plot(self.values, self.expansion_power_list, "Compression Ratio", "Expansion Power (kW) ", "Expansion Power vs Compression Ratio")
 
     
 if __name__ == "__main__":

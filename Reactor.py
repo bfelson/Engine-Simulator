@@ -68,7 +68,7 @@ class Reactor():
         piston.set_velocity(self.engine.get_piston_speed)
 
     def create_sim(self):
-        self.simulator = Simulator(8, 20, 1e-12, 1e-16, self.cylinder, 1, self.inlet_valve, self.outlet_valve, self.ambient_reservoir, self.engine)
+        self.simulator = Simulator(4, 20, 1e-12, 1e-16, self.cylinder, 1, self.inlet_valve, self.outlet_valve, self.ambient_reservoir, self.engine)
         self.cylinder.set_advance_limit('temperature', self.simulator.max_delta_t)
 
     def run_sim(self):

@@ -1858,7 +1858,7 @@
    <slot>submitValues()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>370</x>
+     <x>163</x>
      <y>1068</y>
     </hint>
     <hint type="destinationlabel">
@@ -1874,7 +1874,7 @@
    <slot>startSimulation()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>602</x>
+     <x>455</x>
      <y>1064</y>
     </hint>
     <hint type="destinationlabel">

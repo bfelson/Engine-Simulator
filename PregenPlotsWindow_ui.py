@@ -23,7 +23,7 @@ class Ui_PregenPlotsWindow(object):
     def setupUi(self, PregenPlotsWindow):
         if not PregenPlotsWindow.objectName():
             PregenPlotsWindow.setObjectName(u"PregenPlotsWindow")
-        PregenPlotsWindow.resize(559, 667)
+        PregenPlotsWindow.resize(559, 618)
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)

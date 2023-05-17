@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>559</width>
-    <height>667</height>
+    <height>618</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -223,7 +223,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>207</x>
-     <y>162</y>
+     <y>140</y>
     </hint>
     <hint type="destinationlabel">
      <x>141</x>
@@ -255,7 +255,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>322</x>
-     <y>252</y>
+     <y>230</y>
     </hint>
     <hint type="destinationlabel">
      <x>395</x>
@@ -271,7 +271,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>284</x>
-     <y>295</y>
+     <y>273</y>
     </hint>
     <hint type="destinationlabel">
      <x>529</x>
@@ -287,7 +287,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>301</x>
-     <y>333</y>
+     <y>311</y>
     </hint>
     <hint type="destinationlabel">
      <x>7</x>
@@ -303,7 +303,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>325</x>
-     <y>383</y>
+     <y>361</y>
     </hint>
     <hint type="destinationlabel">
      <x>553</x>
@@ -319,11 +319,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>247</x>
-     <y>422</y>
+     <y>400</y>
     </hint>
     <hint type="destinationlabel">
      <x>550</x>
-     <y>618</y>
+     <y>617</y>
     </hint>
    </hints>
   </connection>
@@ -335,7 +335,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>310</x>
-     <y>465</y>
+     <y>443</y>
     </hint>
     <hint type="destinationlabel">
      <x>552</x>
